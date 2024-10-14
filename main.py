@@ -31,7 +31,7 @@ def computer_move():
 
 def play_game():
     # Losses count for each player
-    losses = {"Player 1": 0, "Player 2": 0, "Computer": 0}
+    losses = {"Player 1": 0, "Player 2": 0, "Player 3 (Computer)": 0}
 
     while True:
         total_sticks = get_initial_sticks()
@@ -40,24 +40,26 @@ def play_game():
         while total_sticks > 0:
             print(f"\nSticks remaining: {total_sticks}")
 
+            # Determine action based on which player's turn it is
             if current_player == "Player 1" or current_player == "Player 2":
                 sticks_taken = get_valid_stick_input(current_player)
             else:
                 sticks_taken = computer_move()
-                print(f"The computer takes {sticks_taken} sticks.")
+                print(f"Player 3 (Computer) takes {sticks_taken} sticks.")
 
             total_sticks -= sticks_taken
 
+            # Check if the game is over
             if total_sticks <= 0:
                 print(f"\n{current_player} took the last stick and loses!")
                 losses[current_player] += 1
                 break
 
-            # Switch to the next player
+            # Rotate players: Player 1 -> Player 2 -> Player 3 (Computer) -> back to Player 1
             if current_player == "Player 1":
                 current_player = "Player 2"
             elif current_player == "Player 2":
-                current_player = "Computer"
+                current_player = "Player 3 (Computer)"
             else:
                 current_player = "Player 1"
 
